@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: searched
+source: https://jolyn.com/.well-known/openid-configuration
+note: >-
+  JOLYN publishes no first-party developer API. Its storefront (jolyn.com) is Shopify-hosted
+  and exposes the Shopify Customer Account API OIDC discovery document plus a UCP agent MCP
+  endpoint. The auth profile below is captured verbatim from the live OIDC discovery document.
+  Read-only storefront browsing (/products/{handle}.json, /collections/{handle}/products.json)
+  requires no authentication.
+summary:
+  types: [openIdConnect, oauth2]
+  oauth2_flows: [authorizationCode]
+  pkce: S256
+  token_endpoint_auth: client_secret_basic
+schemes:
+  - name: ShopifyCustomerAccount
+    type: openIdConnect
+    openIdConnectUrl: https://jolyn.com/.well-known/openid-configuration
+    issuer: https://shopify.com/authentication/7030099
+    authorization_endpoint: https://account.jolyn.com/authentication/oauth/authorize
+    token_endpoint: https://account.jolyn.com/authentication/oauth/token
+    end_session_endpoint: https://account.jolyn.com/authentication/logout
+    jwks_uri: https://account.jolyn.com/authentication/.well-known/jwks.json
+    grant_types: [authorization_code, refresh_token, "urn:ietf:params:oauth:grant-type:jwt-bearer"]
+    response_types: [code]
+    id_token_signing_alg: [RS256]
+    code_challenge_methods: [S256]
+    scopes_supported: [openid, email, "customer-account-api:full", "customer-account-mcp-api:full"]
+    sources: [well-known/jolynclothing-openid-configuration.json]
