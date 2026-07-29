@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: searched
+source: https://jolyn.com/llms.txt
+note: >-
+  Cross-cutting agent/commerce conventions for the JOLYN Shopify storefront, captured from the
+  store's published /llms.txt agent instructions and /.well-known/ucp merchant profile. No first-party
+  developer API or OpenAPI exists; these are the documented conventions for read-only browsing and
+  UCP agent commerce.
+authentication:
+  browsing: none  # read-only product/collection JSON requires no authentication
+  commerce: openIdConnect (Shopify Customer Account API) + UCP buyer-approval
+  ref: authentication/jolynclothing-authentication.yml
+rate_limiting:
+  signaling: HTTP 429
+  guidance: The UCP MCP endpoint is rate-limited per IP; agents must back off on 429 responses.
+buyer_context:
+  params: [context.address_country, context.currency]
+  guidance: Pass buyer context for accurate pricing and availability.
+buyer_approval:
+  rule: Checkout requires contemporaneous human approval; agents must not complete payment without explicit buyer consent.
+read_only_browsing:
+  product_json: GET /products/{handle}.json
+  collection_json: GET /collections/{handle}/products.json
+  search: GET /search?q={query}&type=product
+  sitemap: GET /sitemap.xml
+agent_discovery:
+  llms_txt: https://jolyn.com/llms.txt
+  agents_md: https://jolyn.com/agents.md
+  ucp_profile: https://jolyn.com/.well-known/ucp
+idempotency:
+  documented: false  # no idempotency-key contract published for this storefront

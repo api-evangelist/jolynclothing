@@ -1,0 +1,28 @@
+generated: '2026-07-19'
+method: searched
+source: https://jolyn.com/.well-known/openid-configuration
+docs: https://shopify.dev/docs/api/customer
+note: >-
+  OAuth/OIDC scopes advertised by the Shopify Customer Account API OIDC discovery document
+  served for the JOLYN store. Captured verbatim from scopes_supported; descriptions per the
+  Shopify Customer Account API documentation.
+schemes:
+  - name: ShopifyCustomerAccount
+    source: well-known/jolynclothing-openid-configuration.json
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://account.jolyn.com/authentication/oauth/authorize
+        tokenUrl: https://account.jolyn.com/authentication/oauth/token
+scopes:
+  - scope: openid
+    description: OpenID Connect authentication — issue an ID token for the customer.
+    flows: [authorizationCode]
+  - scope: email
+    description: Access the customer's email address claim.
+    flows: [authorizationCode]
+  - scope: customer-account-api:full
+    description: Full access to the Shopify Customer Account API for the authenticated customer (orders, addresses, profile).
+    flows: [authorizationCode]
+  - scope: customer-account-mcp-api:full
+    description: Full access to the Customer Account MCP API surface for agent-driven, buyer-authorized commerce.
+    flows: [authorizationCode]

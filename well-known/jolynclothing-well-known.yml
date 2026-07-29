@@ -1,0 +1,28 @@
+generated: '2026-07-19'
+method: searched
+source: https://jolyn.com/.well-known/
+host: https://jolyn.com
+note: >-
+  JOLYN's storefront (jolynclothing.com redirects to jolyn.com) is a Shopify-hosted
+  store. The well-known surface below is served by the Shopify platform for this
+  merchant: OIDC discovery for the Shopify Customer Account API and a Universal
+  Commerce Protocol (UCP) merchant profile advertising an agent-facing MCP endpoint.
+documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: jolynclothing-openid-configuration.json
+    note: OIDC discovery, Shopify Customer Account API (issuer shopify.com/authentication/7030099)
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: jolynclothing-oauth-authorization-server.json
+    note: RFC 8414 authorization-server metadata (identical payload to OIDC discovery)
+  - path: /.well-known/ucp
+    status: 200
+    file: jolynclothing-ucp.json
+    note: Universal Commerce Protocol merchant profile — advertises the agent MCP endpoint at /api/ucp/mcp
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
