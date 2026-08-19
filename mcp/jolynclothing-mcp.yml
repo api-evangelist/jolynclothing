@@ -3,12 +3,11 @@ method: searched
 status: published
 source: https://jolyn.com/.well-known/ucp
 docs: https://jolyn.com/llms.txt
-note: >-
-  JOLYN's Shopify store publishes a live agent-facing MCP endpoint via the Universal
-  Commerce Protocol (UCP). The endpoint is advertised in /.well-known/ucp and documented
-  in /llms.txt. tools/list requires a valid agent profile URI (buyer-approval invariant),
-  so the tool schemas below are the documented UCP shopping tools from the store's own
-  llms.txt agent flow — not fabricated. The MCP transport is Streamable HTTP (JSON-RPC POST).
+note: JOLYN's Shopify store publishes a live agent-facing MCP endpoint via the Universal Commerce Protocol
+  (UCP). The endpoint is advertised in /.well-known/ucp and documented in /llms.txt. tools/list requires
+  a valid agent profile URI (buyer-approval invariant), so the tool schemas below are the documented UCP
+  shopping tools from the store's own llms.txt agent flow — not fabricated. The MCP transport is Streamable
+  HTTP (JSON-RPC POST).
 server:
   name: jolyn-ucp-shopping
   transport: http
@@ -16,26 +15,35 @@ server:
   protocol: UCP (Universal Commerce Protocol)
   protocol_spec: https://ucp.dev/2026-04-08/specification/overview/
   supported_versions:
-    - '2026-04-08'
-    - '2026-01-23'
+  - '2026-04-08'
+  - '2026-01-23'
   service: dev.ucp.shopping
   openrpc_schema: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
 tools:
-  - name: search_catalog
-    description: Find products matching the buyer's intent (UCP dev.ucp.shopping.catalog.search).
-  - name: create_cart
-    description: Create a cart and add desired items (UCP dev.ucp.shopping.cart).
-  - name: create_checkout
-    description: Start the purchase flow for a cart (UCP dev.ucp.shopping.checkout).
-  - name: update_checkout
-    description: Set shipping address and method on a checkout (UCP dev.ucp.shopping.fulfillment).
-  - name: complete_checkout
-    description: Finalize the purchase — buyer must approve payment (buyer-approval invariant).
+- name: search_catalog
+  description: Find products matching the buyer's intent (UCP dev.ucp.shopping.catalog.search).
+- name: create_cart
+  description: Create a cart and add desired items (UCP dev.ucp.shopping.cart).
+- name: create_checkout
+  description: Start the purchase flow for a cart (UCP dev.ucp.shopping.checkout).
+- name: update_checkout
+  description: Set shipping address and method on a checkout (UCP dev.ucp.shopping.fulfillment).
+- name: complete_checkout
+  description: Finalize the purchase — buyer must approve payment (buyer-approval invariant).
 constraints:
-  - Checkout requires contemporaneous human approval; agents must not complete payment without explicit buyer consent.
-  - The MCP endpoint is rate-limited per IP; back off on 429 responses.
-  - Pass context.address_country and context.currency for accurate pricing and availability.
+- Checkout requires contemporaneous human approval; agents must not complete payment without explicit
+  buyer consent.
+- The MCP endpoint is rate-limited per IP; back off on 429 responses.
+- Pass context.address_country and context.currency for accurate pricing and availability.
 payment_handlers:
-  - com.google.pay
-  - dev.shopify.card
-  - dev.shopify.shop_pay
+- com.google.pay
+- dev.shopify.card
+- dev.shopify.shop_pay
+deployment:
+  mode: remote
+  endpoint: https://jolyn.com/api/ucp/mcp
+  verified: probed
+  probe: live
+  tools: 13
+  checked: '2026-08-12'
+  source: catalog MCP census
