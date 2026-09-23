@@ -2,12 +2,13 @@ generated: '2026-07-19'
 method: searched
 source: https://jolyn.com/.well-known/
 host: https://jolyn.com
-note: >-
-  JOLYN's storefront (jolynclothing.com redirects to jolyn.com) is a Shopify-hosted
-  store. The well-known surface below is served by the Shopify platform for this
-  merchant: OIDC discovery for the Shopify Customer Account API and a Universal
-  Commerce Protocol (UCP) merchant profile advertising an agent-facing MCP endpoint.
-documents:
+note: 'JOLYN''s storefront (jolynclothing.com redirects to jolyn.com) is a Shopify-hosted store. The well-known
+  surface below is served by the Shopify platform for this merchant: OIDC discovery for the Shopify Customer
+  Account API and a Universal Commerce Protocol (UCP) merchant profile advertising an agent-facing MCP
+  endpoint.'
+hosts:
+- host: https://jolyn.com
+  documents:
   - path: /.well-known/openid-configuration
     status: 200
     file: jolynclothing-openid-configuration.json
@@ -26,3 +27,8 @@ documents:
     status: 404
   - path: /.well-known/ai-plugin.json
     status: 404
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.
