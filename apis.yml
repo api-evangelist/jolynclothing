@@ -74,6 +74,9 @@ apis:
     url: mcp/jolynclothing-mcp.yml
   - type: LLMsTxt
     url: llms/jolynclothing-llms.txt
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
